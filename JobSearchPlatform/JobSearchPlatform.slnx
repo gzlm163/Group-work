@@ -1,0 +1,7 @@
+<Solution>
+  <Folder Name="/Solution Items/">
+    <File Path=".editorconfig" />
+  </Folder>
+  <Project Path="../JobSearchPlatform.Tests/JobSearchPlatform.Tests.csproj" />
+  <Project Path="JobSearchPlatform.csproj" Id="c0d7429b-2778-453b-9498-94b9f58bdae5" />
+</Solution>
