@@ -5,6 +5,14 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace JobSearchPlatform {
-  internal class ITVacancyCreator {
+  public class ITVacancyCreator : VacancyCreator {
+    public override Vacancy Create(string title, string company, int salary) {
+      return new Vacancy {
+        Title = title,
+        Company = company,
+        Salary = salary,
+        Type = "IT"
+      };
+    }
   }
 }

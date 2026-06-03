@@ -43,10 +43,16 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ITVacancyCreator.cs" />
+    <Compile Include="MarketingVacancyCreator.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SalesVacancyCreator.cs" />
     <Compile Include="Vacancy.cs" />
+    <Compile Include="VacancyController.cs" />
+    <Compile Include="VacancyCreator.cs" />
     <Compile Include="VacancyRepository.cs" />
+    <Compile Include="VacancyView.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

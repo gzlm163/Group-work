@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace JobSearchPlatform {
-  internal class VacancyCreator {
+  public abstract class VacancyCreator {
+    public abstract Vacancy Create(string title, string company, int salary);
   }
 }
