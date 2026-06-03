@@ -5,9 +5,9 @@ namespace JobSearchPlatform {
   public class ResumeRepository {
     private const string FileName = "resume.txt";
 
-    public Resume Load() {
+    public Resume? Load() {
       if (!File.Exists(FileName)) {
-        return new Resume();
+        return null;
       }
 
       try {
@@ -15,7 +15,7 @@ namespace JobSearchPlatform {
         string[] parts = line.Split('|');
 
         if (parts.Length != 4) {
-          return new Resume();
+          return null;
         }
 
         Resume resume = new Resume {
@@ -28,7 +28,7 @@ namespace JobSearchPlatform {
         return resume;
       }
       catch {
-        return new Resume();
+        return null;
       }
     }
 

@@ -26,18 +26,18 @@ namespace JobSearchPlatform.Tests
         [Test]
         public void Load_WhenFileMissing_ReturnsNull()
         {
-            var result = _repo.Load();
+            Resume result = _repo.Load();
             Assert.That(result, Is.Null);
         }
 
         [Test]
         public void Save_CreatesFileWithCorrectFormat()
         {
-            var resume = new Resume { Name = "Тест", Experience = 3, Skills = "C#", Salary = 100000 };
-            ResumeRepository.Save(resume);
+            Resume resume = new Resume { Name = "Тест", Experience = 3, Skills = "C#", Salary = 100000 };
+            _repo.Save(resume);
 
             Assert.That(File.Exists(TestFile), Is.True);
-            var content = File.ReadAllText(TestFile, Encoding.UTF8);
+            string content = File.ReadAllText(TestFile, Encoding.UTF8);
             Assert.That(content, Is.EqualTo("Тест|3|C#|100000"));
         }
 
@@ -46,7 +46,7 @@ namespace JobSearchPlatform.Tests
         {
             File.WriteAllText(TestFile, "Анна|2|Python|95000", Encoding.UTF8);
 
-            var result = _repo.Load();
+            Resume result = _repo.Load();
 
             Assert.That(result, Is.Not.Null);
             Assert.That(result.Name, Is.EqualTo("Анна"));
@@ -59,7 +59,7 @@ namespace JobSearchPlatform.Tests
         public void Load_WhenFileCorrupted_ReturnsNull()
         {
             File.WriteAllText(TestFile, "Анна|2|Python", Encoding.UTF8);
-            var result = _repo.Load();
+            Resume result = _repo.Load();
             Assert.That(result, Is.Null);
         }
 
@@ -67,7 +67,7 @@ namespace JobSearchPlatform.Tests
         public void Load_WhenFileEmpty_ReturnsNull()
         {
             File.WriteAllText(TestFile, "", Encoding.UTF8);
-            var result = _repo.Load();
+            Resume result = _repo.Load();
             Assert.That(result, Is.Null);
         }
     }
