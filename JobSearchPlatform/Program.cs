@@ -1,4 +1,6 @@
 ﻿using JobSearchPlatform;
+using JobSearchPlatform.Controllers;
+using JobSearchPlatform.Models;
 using System;
 
 internal class Program {
