@@ -21,8 +21,8 @@ namespace JobSearchPlatform {
         _resumeView.ShowMessage("1. Показать резюме");
         _resumeView.ShowMessage("2. Создать/Перезаписать резюме");
         _resumeView.ShowMessage("3. Изменить поле");
-        _resumeView.ShowMessage("4. Undo");
-        _resumeView.ShowMessage("5. Redo");
+        _resumeView.ShowMessage("4. Отменить");
+        _resumeView.ShowMessage("5. Повторить");
         _resumeView.ShowMessage("6. Выйти");
 
         if (!int.TryParse(Console.ReadLine(), out int menuOption)) {

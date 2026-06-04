@@ -47,7 +47,6 @@ namespace JobSearchPlatform {
 
     /// <summary>Shows fieldValue selection menu and returns selected number</summary>
     /// <returns>Selected fieldValue number (1-4) or 0 if invalid</returns>
-    [System.Diagnostics.CodeAnalysis.SuppressMessage("Style", "IDE0046:Преобразовать в условное выражение", Justification = "<Ожидание>")]
     public int GetFieldNumber() {
       Console.WriteLine("1 - Имя");
       Console.WriteLine("2 - Опыт");
