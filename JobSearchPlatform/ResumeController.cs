@@ -14,6 +14,7 @@ namespace JobSearchPlatform {
       _currentResume = _repo.Load() ?? new Resume();
     }
 
+    /// <summary>Main menu loop for resume management</summary>
     public void Run() {
       while (true) {
         _view.ShowMessage("\n=== УПРАВЛЕНИЕ РЕЗЮМЕ ===");
@@ -46,10 +47,12 @@ namespace JobSearchPlatform {
       }
     }
 
+    /// <summary>Displays current resume</summary>
     public void Show() {
       _view.ShowResume(_currentResume);
     }
 
+    /// <summary>Creates new resume or overwrites existing one</summary>
     public void CreateOrOverwrite() {
       if (_currentResume.Name != "Не указано") {
         if (!_view.AskForOverwrite()) {
@@ -63,6 +66,8 @@ namespace JobSearchPlatform {
       _view.ShowMessage("Резюме сохранено");
     }
 
+    /// <summary>Changes specified field using command pattern</summary>
+    /// <param name="field">Field number (1-4)</param>
     public void ChangeField(int field) {
       string newValue = _view.GetNewFieldValue(field);
       ICommand command = default!;
@@ -94,12 +99,14 @@ namespace JobSearchPlatform {
       }
     }
 
+    /// <summary>Undoes last action</summary>
     public void Undo() {
       _history.Undo();
       _repo.Save(_currentResume);
       _view.ShowMessage("Отмена выполнена");
     }
 
+    /// <summary>Redoes last undone action</summary>
     public void Redo() {
       _history.Redo();
       _repo.Save(_currentResume);

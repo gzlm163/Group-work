@@ -1,7 +1,4 @@
-﻿using Microsoft.VisualStudio.TestPlatform.ObjectModel;
-using NUnit.Framework;
-
-namespace JobSearchPlatform.Tests
+﻿namespace JobSearchPlatform.Tests
 {
     [TestFixture]
     public class CommandHistoryTests
@@ -10,39 +7,39 @@ namespace JobSearchPlatform.Tests
         public void ExecuteCommand_AddsToUndoStack()
         {
             CommandHistory history = new CommandHistory();
-            TestCommand cmd = new TestCommand();
+            TestCommand testCommand = new TestCommand();
 
-            history.ExecuteCommand(cmd);
+            history.ExecuteCommand(testCommand);
             history.Undo();
 
-            Assert.That(cmd.UndoCalled, Is.True);
+            Assert.That(testCommand.UndoCalled, Is.True);
         }
 
         [Test]
         public void Undo_MovesCommandToRedoStack()
         {
             CommandHistory history = new CommandHistory();
-            TestCommand cmd = new TestCommand();
+            TestCommand testCommand = new TestCommand();
 
-            history.ExecuteCommand(cmd);
+            history.ExecuteCommand(testCommand);
             history.Undo();
             history.Redo();
 
-            Assert.That(cmd.ExecuteCalled, Is.True);
+            Assert.That(testCommand.ExecuteCalled, Is.True);
         }
 
         [Test]
         public void Redo_MovesCommandBackToUndoStack()
         {
             CommandHistory history = new CommandHistory();
-            TestCommand cmd = new TestCommand();
+            TestCommand testCommand = new TestCommand();
 
-            history.ExecuteCommand(cmd);
+            history.ExecuteCommand(testCommand);
             history.Undo();
             history.Redo();
             history.Undo();
 
-            Assert.That(cmd.UndoCalled, Is.True);
+            Assert.That(testCommand.UndoCalled, Is.True);
         }
 
         [Test]

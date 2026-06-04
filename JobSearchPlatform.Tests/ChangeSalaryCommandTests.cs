@@ -8,19 +8,19 @@ namespace JobSearchPlatform.Tests
         [Test]
         public void Execute_ChangesSalary()
         {
-            Resume resume = new() { Salary = 50000 };
-            ChangeSalaryCommand cmd = new(resume, 100000);
-            cmd.Execute();
+            Resume resume = new Resume { Salary = 50000 };
+            ChangeSalaryCommand changeSalaryCommand = new ChangeSalaryCommand(resume, 100000);
+            changeSalaryCommand.Execute();
             Assert.That(resume.Salary, Is.EqualTo(100000));
         }
 
         [Test]
         public void Undo_RestoresOldSalary()
         {
-            Resume resume = new() { Salary = 50000 };
-            ChangeSalaryCommand cmd = new(resume, 100000);
-            cmd.Execute();
-            cmd.Undo();
+            Resume resume = new Resume { Salary = 50000 };
+            ChangeSalaryCommand changeSalaryCommand = new ChangeSalaryCommand(resume, 100000);
+            changeSalaryCommand.Execute();
+            changeSalaryCommand.Undo();
             Assert.That(resume.Salary, Is.EqualTo(50000));
         }
     }

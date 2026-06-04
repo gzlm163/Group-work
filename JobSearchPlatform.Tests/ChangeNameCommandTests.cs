@@ -6,10 +6,10 @@
         [Test]
         public void Execute_ChangesName()
         {
-            Resume resume = new() { Name = "Старое" };
-            ChangeNameCommand cmd = new(resume, "Новое");
+            Resume resume = new Resume { Name = "Старое" };
+            ChangeNameCommand changeNameCommand = new ChangeNameCommand(resume, "Новое");
 
-            cmd.Execute();
+            changeNameCommand.Execute();
 
             Assert.That(resume.Name, Is.EqualTo("Новое"));
         }
@@ -17,11 +17,11 @@
         [Test]
         public void Undo_RestoresOldName()
         {
-            Resume resume = new() { Name = "Старое" };
-            ChangeNameCommand cmd = new(resume, "Новое");
-            cmd.Execute();
+            Resume resume = new Resume { Name = "Старое" };
+            ChangeNameCommand changeNameCommand = new ChangeNameCommand(resume, "Новое");
+            changeNameCommand.Execute();
 
-            cmd.Undo();
+            changeNameCommand.Undo();
 
             Assert.That(resume.Name, Is.EqualTo("Старое"));
         }

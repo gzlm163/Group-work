@@ -5,6 +5,10 @@ namespace JobSearchPlatform {
     private readonly Stack<ICommand> _undoStack = new Stack<ICommand>();
     private readonly Stack<ICommand> _redoStack = new Stack<ICommand>();
     private const int MaxHistory = 10;
+
+
+    /// <summary>Executes a command and adds it to the undo stack</summary>
+    /// <param name="command">The command to execute</param>
     public void ExecuteCommand(ICommand command) {
       if (command == null) {
         return;
@@ -29,6 +33,8 @@ namespace JobSearchPlatform {
         _undoStack.Push(temp.Pop());
       }
     }
+
+    /// <summary>Undoes the last executed command</summary>
     public void Undo() {
       if (_undoStack.Count == 0) {
         return;
@@ -38,6 +44,7 @@ namespace JobSearchPlatform {
       _redoStack.Push(command);
     }
 
+    /// <summary>Redoes the last undone command</summary>
     public void Redo() {
       if (_redoStack.Count == 0) {
         return;
@@ -47,6 +54,7 @@ namespace JobSearchPlatform {
       _undoStack.Push(command);
     }
 
+    /// <summary>Clears both undo and redo stacks</summary>
     public void Clear() {
       _undoStack.Clear();
       _redoStack.Clear();
