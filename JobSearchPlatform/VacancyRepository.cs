@@ -7,7 +7,10 @@ using System.Threading.Tasks;
 
 namespace JobSearchPlatform {
   public class VacancyRepository {
-    private readonly string _filePath = "vacancies.txt";
+    private readonly string _filePath;
+    public VacancyRepository(string filePath) {
+      _filePath = filePath;
+    }
 
     public List<Vacancy> GetAll() {
       if (!File.Exists(_filePath)) {

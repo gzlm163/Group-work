@@ -10,15 +10,15 @@ namespace JobSearchPlatform {
     private readonly VacancyView _view;
     private readonly Dictionary<string, VacancyCreator> _creators;
 
-    public VacancyController() {
-      _repository = new VacancyRepository();
-      _view = new VacancyView();
+    public VacancyController(VacancyRepository repository, VacancyView view) {
+      _repository = repository;
+      _view = view;
       _creators = new Dictionary<string, VacancyCreator>
       {
-            { "IT", new ITVacancyCreator() },
-            { "Marketing", new MarketingVacancyCreator() },
-            { "Sales", new SalesVacancyCreator() }
-        };
+        { "IT", new ITVacancyCreator() },
+        { "Marketing", new MarketingVacancyCreator() },
+        { "Sales", new SalesVacancyCreator() }
+    };
     }
 
     public void Run() {
@@ -52,7 +52,7 @@ namespace JobSearchPlatform {
       _view.WaitForKey();
     }
 
-    private void AddVacancy() {
+    public void AddVacancy() {
       (string title, string company, int salary, string type) = _view.GetNewVacancyData();
 
       if (title == null || company == null || type == null) {
@@ -73,7 +73,7 @@ namespace JobSearchPlatform {
       _view.WaitForKey();
     }
 
-    private void DeleteVacancy() {
+    public void DeleteVacancy() {
       List<Vacancy> vacancies = _repository.GetAll();
 
       if (vacancies.Count == 0) {

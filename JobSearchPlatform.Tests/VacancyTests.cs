@@ -12,29 +12,29 @@ namespace JobSearchPlatform.Tests
             Vacancy vacancy = new Vacancy
             {
                 Id = 1,
-                Title = "Test",
-                Company = "Test Corp",
-                Salary = 1000,
+                Title = "C# Developer",
+                Company = "TechCorp",
+                Salary = 120000,
                 Type = "IT"
             };
 
             string result = vacancy.ToFileString();
 
-            Assert.AreEqual("1|Test|Test Corp|1000|IT", result);
+            Assert.AreEqual("1|C# Developer|TechCorp|120000|IT", result);
         }
 
         [Test]
         public void FromFileString_CreatesVacancyCorrectly()
         {
-            string line = "1|Test|Test Corp|1000|IT";
+            string line = "1|C# Developer|TechCorp|120000|IT";
 
             Vacancy vacancy = Vacancy.FromFileString(line);
 
             Assert.AreEqual(1, vacancy.Id);
-            Assert.AreEqual("Test", vacancy.Title);
-            Assert.AreEqual("Test Corp", vacancy.Company);
-            Assert.AreEqual(1000, vacancy.Salary);
+            Assert.AreEqual("C# Developer", vacancy.Title);
+            Assert.AreEqual("TechCorp", vacancy.Company);
+            Assert.AreEqual(120000, vacancy.Salary);
             Assert.AreEqual("IT", vacancy.Type);
         }
     }
-}
+}   
