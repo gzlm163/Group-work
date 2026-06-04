@@ -41,6 +41,23 @@ namespace JobSearchPlatform.Tests
         }
 
         [Test]
+        public void GetAll_LoadsVacanciesFromFile()
+        {
+            Vacancy first = new Vacancy { Title = "First", Company = "A", Salary = 1000, Type = "IT" };
+            Vacancy second = new Vacancy { Title = "Second", Company = "B", Salary = 2000, Type = "Marketing" };
+
+            repository.Add(first);
+            repository.Add(second);
+
+            VacancyRepository newRepository = new VacancyRepository(testFilePath);
+            List<Vacancy> loaded = newRepository.GetAll();
+
+            Assert.AreEqual(2, loaded.Count);
+            Assert.AreEqual("First", loaded[0].Title);
+            Assert.AreEqual("Second", loaded[1].Title);
+        }
+
+        [Test]
         public void Add_IncreasesCountByOne()
         {
             Vacancy vacancy = new Vacancy
@@ -97,23 +114,6 @@ namespace JobSearchPlatform.Tests
 
             Assert.AreEqual(1, all.Count);
             Assert.AreEqual("Keep", all[0].Title);
-        }
-
-        [Test]
-        public void GetAll_LoadsVacanciesFromFile()
-        {
-            Vacancy first = new Vacancy { Title = "First", Company = "A", Salary = 1000, Type = "IT" };
-            Vacancy second = new Vacancy { Title = "Second", Company = "B", Salary = 2000, Type = "Marketing" };
-
-            repository.Add(first);
-            repository.Add(second);
-
-            VacancyRepository newRepository = new VacancyRepository(testFilePath);
-            List<Vacancy> loaded = newRepository.GetAll();
-
-            Assert.AreEqual(2, loaded.Count);
-            Assert.AreEqual("First", loaded[0].Title);
-            Assert.AreEqual("Second", loaded[1].Title);
         }
     }
 }

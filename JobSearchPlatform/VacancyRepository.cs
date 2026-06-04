@@ -1,17 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace JobSearchPlatform {
-  public class VacancyRepository {
+  public class VacancyRepository : IVacancyRepository {
     private readonly string _filePath;
     public VacancyRepository(string filePath) {
       _filePath = filePath;
     }
 
+    /// <summary>
+    /// Загружает все вакансии из файла
+    /// </summary>
     public List<Vacancy> GetAll() {
       if (!File.Exists(_filePath)) {
         return new List<Vacancy>();
@@ -36,6 +36,9 @@ namespace JobSearchPlatform {
       return vacancies;
     }
 
+    /// <summary>
+    /// Сохраняет список вакансий в файл
+    /// </summary>
     private void SaveAll(List<Vacancy> vacancies) {
       List<string> lines = new List<string>();
 
@@ -46,6 +49,9 @@ namespace JobSearchPlatform {
       File.WriteAllLines(_filePath, lines.ToArray());
     }
 
+    /// <summary>
+    /// Добавляет новую вакансию и автоматически назначает Id
+    /// </summary>
     public void Add(Vacancy vacancy) {
       List<Vacancy> allVacancies = GetAll();
 
@@ -67,6 +73,9 @@ namespace JobSearchPlatform {
       SaveAll(allVacancies);
     }
 
+    /// <summary>
+    /// Удаляет вакансию по Id
+    /// </summary>
     public void Delete(int id) {
       List<Vacancy> allVacancies = GetAll();
       List<Vacancy> filteredVacancies = new List<Vacancy>();

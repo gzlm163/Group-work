@@ -1,16 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 
 namespace JobSearchPlatform {
   public class VacancyController {
-    private readonly VacancyRepository _repository;
-    private readonly VacancyView _view;
+    private readonly IVacancyRepository _repository;
+    private readonly IVacancyView _view;
     private readonly Dictionary<string, VacancyCreator> _creators;
 
-    public VacancyController(VacancyRepository repository, VacancyView view) {
+    public VacancyController(IVacancyRepository repository, IVacancyView view) {
       _repository = repository;
       _view = view;
       _creators = new Dictionary<string, VacancyCreator>
@@ -21,6 +17,9 @@ namespace JobSearchPlatform {
     };
     }
 
+    /// <summary>
+    /// Запускает главное меню управления вакансиями и обрабатывает выбор пользователя
+    /// </summary>
     public void Run() {
       while (true) {
         _view.ShowMainMenu();
@@ -52,6 +51,9 @@ namespace JobSearchPlatform {
       _view.WaitForKey();
     }
 
+    /// <summary>
+    /// Добавляет новую вакансию
+    /// </summary>
     public void AddVacancy() {
       (string title, string company, int salary, string type) = _view.GetNewVacancyData();
 
@@ -73,6 +75,9 @@ namespace JobSearchPlatform {
       _view.WaitForKey();
     }
 
+    /// <summary>
+    /// Удаляет вакансию по ID, запрашивая его у пользователя
+    /// </summary>
     public void DeleteVacancy() {
       List<Vacancy> vacancies = _repository.GetAll();
 

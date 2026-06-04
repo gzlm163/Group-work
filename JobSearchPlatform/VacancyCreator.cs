@@ -1,11 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace JobSearchPlatform {
+﻿namespace JobSearchPlatform {
   public abstract class VacancyCreator {
+    /// <summary>
+    /// Создаёт объект Vacancy с заданными параметрами
+    /// </summary>
     public abstract Vacancy Create(string title, string company, int salary);
   }
 }
