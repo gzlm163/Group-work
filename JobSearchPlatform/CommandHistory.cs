@@ -24,13 +24,13 @@ namespace JobSearchPlatform {
     }
 
     private void RemoveBottomCommand() {
-      Stack<ICommand> temp = new Stack<ICommand>();
+      Stack<ICommand> tempStack = new Stack<ICommand>();
       while (_undoStack.Count > 1) {
-        temp.Push(_undoStack.Pop());
+        tempStack.Push(_undoStack.Pop());
       }
       _ = _undoStack.Pop();
-      while (temp.Count > 0) {
-        _undoStack.Push(temp.Pop());
+      while (tempStack.Count > 0) {
+        _undoStack.Push(tempStack.Pop());
       }
     }
 
@@ -39,9 +39,9 @@ namespace JobSearchPlatform {
       if (_undoStack.Count == 0) {
         return;
       }
-      ICommand command = _undoStack.Pop();
-      command.Undo();
-      _redoStack.Push(command);
+      ICommand lastCommand = _undoStack.Pop();
+      lastCommand.Undo();
+      _redoStack.Push(lastCommand);
     }
 
     /// <summary>Redoes the last undone command</summary>
@@ -49,9 +49,9 @@ namespace JobSearchPlatform {
       if (_redoStack.Count == 0) {
         return;
       }
-      ICommand command = _redoStack.Pop();
-      command.Execute();
-      _undoStack.Push(command);
+      ICommand lastUndoneCommand = _redoStack.Pop();
+      lastUndoneCommand.Execute();
+      _undoStack.Push(lastUndoneCommand);
     }
 
     /// <summary>Clears both undo and redo stacks</summary>

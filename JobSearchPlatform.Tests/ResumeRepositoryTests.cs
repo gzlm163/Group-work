@@ -8,13 +8,13 @@ namespace JobSearchPlatform.Tests
     public class ResumeRepositoryTests
     {
         private const string TestFile = "resume.txt";
-        private ResumeRepository _repo;
+        private ResumeRepository _repository;
 
         [SetUp]
         public void Setup()
         {
             if (File.Exists(TestFile)) File.Delete(TestFile);
-            _repo = new ResumeRepository();
+            _repository = new ResumeRepository();
         }
 
         [TearDown]
@@ -26,19 +26,19 @@ namespace JobSearchPlatform.Tests
         [Test]
         public void Load_WhenFileMissing_ReturnsNull()
         {
-            Resume? result = _repo.Load();
+            Resume result = _repository.Load();
             Assert.That(result, Is.Null);
         }
 
         [Test]
         public void Save_CreatesFileWithCorrectFormat()
         {
-            Resume resume = new Resume { Name = "Тест", Experience = 3, Skills = "C#", Salary = 100000 };
-            _repo.Save(resume);
+            Resume testResume = new Resume { Name = "Тест", Experience = 3, Skills = "C#", Salary = 100000 };
+            _repository.Save(testResume);
 
             Assert.That(File.Exists(TestFile), Is.True);
-            string content = File.ReadAllText(TestFile, Encoding.UTF8);
-            Assert.That(content, Is.EqualTo("Тест|3|C#|100000"));
+            string fileContent = File.ReadAllText(TestFile, Encoding.UTF8);
+            Assert.That(fileContent, Is.EqualTo("Тест|3|C#|100000"));
         }
 
         [Test]
@@ -46,7 +46,7 @@ namespace JobSearchPlatform.Tests
         {
             File.WriteAllText(TestFile, "Анна|2|Python|95000", Encoding.UTF8);
 
-            Resume? result = _repo.Load();
+            Resume result = _repository.Load();
 
             Assert.That(result, Is.Not.Null);
             Assert.That(result.Name, Is.EqualTo("Анна"));
@@ -59,15 +59,15 @@ namespace JobSearchPlatform.Tests
         public void Load_WhenFileCorrupted_ReturnsNull()
         {
             File.WriteAllText(TestFile, "Анна|2|Python", Encoding.UTF8);
-            Resume? result = _repo.Load();
-            Assert.That(result, Is.Null);
+            Resume loadedResume = _repository.Load();
+            Assert.That(loadedResume, Is.Null);
         }
 
         [Test]
         public void Load_WhenFileEmpty_ReturnsNull()
         {
             File.WriteAllText(TestFile, "", Encoding.UTF8);
-            Resume? result = _repo.Load();
+            Resume result = _repository.Load();
             Assert.That(result, Is.Null);
         }
     }

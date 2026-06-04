@@ -8,20 +8,20 @@ namespace JobSearchPlatform.Tests
         [Test]
         public void Execute_ChangesSkills()
         {
-            Resume resume = new Resume { Skills = "Старые" };
-            ChangeSkillsCommand changeSkillsCommand = new ChangeSkillsCommand(resume, "Новые");
+            Resume testResume = new Resume { Skills = "Старые" };
+            ChangeSkillsCommand changeSkillsCommand = new ChangeSkillsCommand(testResume, "Новые");
             changeSkillsCommand.Execute();
-            Assert.That(resume.Skills, Is.EqualTo("Новые"));
+            Assert.That(testResume.Skills, Is.EqualTo("Новые"));
         }
 
         [Test]
         public void Undo_RestoresOldSkills()
         {
-            Resume resume = new Resume { Skills = "Старые" };
-            ChangeSkillsCommand changeSkillsCommand = new ChangeSkillsCommand(resume, "Новые");
+            Resume testResume = new Resume { Skills = "Старые" };
+            ChangeSkillsCommand changeSkillsCommand = new ChangeSkillsCommand(testResume, "Новые");
             changeSkillsCommand.Execute();
             changeSkillsCommand.Undo();
-            Assert.That(resume.Skills, Is.EqualTo("Старые"));
+            Assert.That(testResume.Skills, Is.EqualTo("Старые"));
         }
     }
 }

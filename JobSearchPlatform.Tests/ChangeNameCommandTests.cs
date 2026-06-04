@@ -6,24 +6,24 @@
         [Test]
         public void Execute_ChangesName()
         {
-            Resume resume = new Resume { Name = "Старое" };
-            ChangeNameCommand changeNameCommand = new ChangeNameCommand(resume, "Новое");
+            Resume testResume = new Resume { Name = "Старое" };
+            ChangeNameCommand changeNameCommand = new ChangeNameCommand(testResume, "Новое");
 
             changeNameCommand.Execute();
 
-            Assert.That(resume.Name, Is.EqualTo("Новое"));
+            Assert.That(testResume.Name, Is.EqualTo("Новое"));
         }
 
         [Test]
         public void Undo_RestoresOldName()
         {
-            Resume resume = new Resume { Name = "Старое" };
-            ChangeNameCommand changeNameCommand = new ChangeNameCommand(resume, "Новое");
+            Resume testResume = new Resume { Name = "Старое" };
+            ChangeNameCommand changeNameCommand = new ChangeNameCommand(testResume, "Новое");
             changeNameCommand.Execute();
 
             changeNameCommand.Undo();
 
-            Assert.That(resume.Name, Is.EqualTo("Старое"));
+            Assert.That(testResume.Name, Is.EqualTo("Старое"));
         }
     }
 }

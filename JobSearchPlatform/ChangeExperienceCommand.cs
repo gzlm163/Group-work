@@ -1,8 +1,8 @@
 ﻿namespace JobSearchPlatform {
-  public class ChangeExperienceCommand(Resume resume, int newValue) : ICommand {
-    private readonly Resume _resume = resume;
-    private readonly int _oldValue = resume.Experience;
-    private readonly int _newValue = newValue;
+  public class ChangeExperienceCommand(Resume targetResume, int newExperienceValue) : ICommand {
+    private readonly Resume _resume = targetResume;
+    private readonly int _oldValue = targetResume.Experience;
+    private readonly int _newValue = newExperienceValue;
 
     public void Execute() {
       _resume.Experience = _newValue;

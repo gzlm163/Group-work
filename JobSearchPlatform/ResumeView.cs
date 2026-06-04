@@ -15,38 +15,38 @@ namespace JobSearchPlatform {
     /// <returns>New Resume object with user data</returns>
     public Resume GetNewResume() {
       Console.Write("Имя: ");
-      string userName;
-      userName = Console.ReadLine() ?? "Не указано";
+      string enteredUserName;
+      enteredUserName = Console.ReadLine() ?? "Не указано";
 
       Console.Write("Опыт: ");
       int userExperience;
-      if (int.TryParse(Console.ReadLine(), out int exp)) {
-        userExperience = exp;
+      if (int.TryParse(Console.ReadLine(), out int experienceValue)) {
+        userExperience = experienceValue;
       } else {
         userExperience = 0;
       }
 
       Console.Write("Навыки: ");
-      string userSkills = Console.ReadLine() ?? "Нет";
+      string enteredSkills = Console.ReadLine() ?? "Нет";
 
       Console.Write("Зарплата: ");
       int userSalary;
-      if (int.TryParse(Console.ReadLine(), out int sal)) {
-        userSalary = sal;
+      if (int.TryParse(Console.ReadLine(), out int salaryValue)) {
+        userSalary = salaryValue;
       } else {
         userSalary = 0;
       }
 
       return new Resume {
-        Name = userName,
+        Name = enteredUserName,
         Experience = userExperience,
-        Skills = userSkills,
+        Skills = enteredSkills,
         Salary = userSalary
       };
     }
 
-    /// <summary>Shows field selection menu and returns selected number</summary>
-    /// <returns>Selected field number (1-4) or 0 if invalid</returns>
+    /// <summary>Shows fieldValue selection menu and returns selected number</summary>
+    /// <returns>Selected fieldValue number (1-4) or 0 if invalid</returns>
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Style", "IDE0046:Преобразовать в условное выражение", Justification = "<Ожидание>")]
     public int GetFieldNumber() {
       Console.WriteLine("1 - Имя");
@@ -55,14 +55,14 @@ namespace JobSearchPlatform {
       Console.WriteLine("4 - Зарплата");
       Console.Write("Выберите поле: ");
 
-      if (int.TryParse(Console.ReadLine(), out int field)) {
-        return field;
+      if (int.TryParse(Console.ReadLine(), out int fieldValue)) {
+        return fieldValue;
       } else {
         return 0;
       }
     }
 
-    /// <summary>Gets new value for specified field</summary>
+    /// <summary>Gets new value for specified fieldValue</summary>
     /// <param name="fieldNumber">Field number (1-4)</param>
     /// <returns>New value as string</returns>
     public string GetNewFieldValue(int fieldNumber) {
@@ -82,9 +82,9 @@ namespace JobSearchPlatform {
     /// <returns>True if user confirms, false otherwise</returns>
     public bool AskForOverwrite() {
       Console.Write("Резюме уже есть. Перезаписать? (да/нет): ");
-      string userAnswer = Console.ReadLine() ?? "";
+      string userConfirmation = Console.ReadLine() ?? "";
 
-      bool isOverwrite = userAnswer == "да";
+      bool isOverwrite = userConfirmation == "да";
       return isOverwrite;
     }
 

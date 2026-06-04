@@ -3,45 +3,45 @@
 namespace JobSearchPlatform {
   public class ResumeController {
     private Resume _currentResume;
-    private readonly ResumeRepository _repo;
-    private readonly ResumeView _view;
-    private readonly CommandHistory _history;
+    private readonly ResumeRepository _resumeRepository;
+    private readonly ResumeView _resumeView;
+    private readonly CommandHistory _commandHistory;
 
-    public ResumeController(ResumeRepository repo, ResumeView view) {
-      _repo = repo;
-      _view = view;
-      _history = new CommandHistory();
-      _currentResume = _repo.Load() ?? new Resume();
+    public ResumeController(ResumeRepository resumeRepository, ResumeView resumeView) {
+      _resumeRepository = resumeRepository;
+      _resumeView = resumeView;
+      _commandHistory = new CommandHistory();
+      _currentResume = _resumeRepository.Load() ?? new Resume();
     }
 
     /// <summary>Main menu loop for resume management</summary>
     public void Run() {
       while (true) {
-        _view.ShowMessage("\n=== УПРАВЛЕНИЕ РЕЗЮМЕ ===");
-        _view.ShowMessage("1. Показать резюме");
-        _view.ShowMessage("2. Создать/Перезаписать резюме");
-        _view.ShowMessage("3. Изменить поле");
-        _view.ShowMessage("4. Undo");
-        _view.ShowMessage("5. Redo");
-        _view.ShowMessage("6. Выйти");
+        _resumeView.ShowMessage("\n=== УПРАВЛЕНИЕ РЕЗЮМЕ ===");
+        _resumeView.ShowMessage("1. Показать резюме");
+        _resumeView.ShowMessage("2. Создать/Перезаписать резюме");
+        _resumeView.ShowMessage("3. Изменить поле");
+        _resumeView.ShowMessage("4. Undo");
+        _resumeView.ShowMessage("5. Redo");
+        _resumeView.ShowMessage("6. Выйти");
 
-        if (!int.TryParse(Console.ReadLine(), out int choice)) {
-          _view.ShowMessage("Ошибка ввода. Введите число от 1 до 6.");
+        if (!int.TryParse(Console.ReadLine(), out int menuOption)) {
+          _resumeView.ShowMessage("Ошибка ввода. Введите число от 1 до 6.");
           continue;
         }
 
-        if (choice == 1) {
+        if (menuOption == 1) {
           Show();
-        } else if (choice == 2) {
+        } else if (menuOption == 2) {
           CreateOrOverwrite();
-        } else if (choice == 3) {
-          int field = _view.GetFieldNumber();
+        } else if (menuOption == 3) {
+          int field = _resumeView.GetFieldNumber();
           ChangeField(field);
-        } else if (choice == 4) {
+        } else if (menuOption == 4) {
           Undo();
-        } else if (choice == 5) {
+        } else if (menuOption == 5) {
           Redo();
-        } else if (choice == 6) {
+        } else if (menuOption == 6) {
           break;
         }
       }
@@ -49,68 +49,68 @@ namespace JobSearchPlatform {
 
     /// <summary>Displays current resume</summary>
     public void Show() {
-      _view.ShowResume(_currentResume);
+      _resumeView.ShowResume(_currentResume);
     }
 
     /// <summary>Creates new resume or overwrites existing one</summary>
     public void CreateOrOverwrite() {
       if (_currentResume.Name != "Не указано") {
-        if (!_view.AskForOverwrite()) {
+        if (!_resumeView.AskForOverwrite()) {
           return;
         }
       }
 
-      _currentResume = _view.GetNewResume();
-      _repo.Save(_currentResume);
-      _history.Clear();
-      _view.ShowMessage("Резюме сохранено");
+      _currentResume = _resumeView.GetNewResume();
+      _resumeRepository.Save(_currentResume);
+      _commandHistory.Clear();
+      _resumeView.ShowMessage("Резюме сохранено");
     }
 
-    /// <summary>Changes specified field using command pattern</summary>
-    /// <param name="field">Field number (1-4)</param>
-    public void ChangeField(int field) {
-      string newValue = _view.GetNewFieldValue(field);
+    /// <summary>Changes specified selectedFieldNumber using command pattern</summary>
+    /// <param name="selectedFieldNumber">Field number (1-4)</param>
+    public void ChangeField(int selectedFieldNumber) {
+      string newFieldValue = _resumeView.GetNewFieldValue(selectedFieldNumber);
       ICommand command = default!;
 
-      if (field == 1) {
-        command = new ChangeNameCommand(_currentResume, newValue);
-      } else if (field == 2) {
-        if (int.TryParse(newValue, out int exp)) {
-          command = new ChangeExperienceCommand(_currentResume, exp);
+      if (selectedFieldNumber == 1) {
+        command = new ChangeNameCommand(_currentResume, newFieldValue);
+      } else if (selectedFieldNumber == 2) {
+        if (int.TryParse(newFieldValue, out int experienceValue)) {
+          command = new ChangeExperienceCommand(_currentResume, experienceValue);
         } else {
-          _view.ShowMessage("Ошибка: опыт должен быть числом");
+          _resumeView.ShowMessage("Ошибка: опыт должен быть числом");
           return;
         }
-      } else if (field == 3) {
-        command = new ChangeSkillsCommand(_currentResume, newValue);
-      } else if (field == 4) {
-        if (int.TryParse(newValue, out int sal)) {
-          command = new ChangeSalaryCommand(_currentResume, sal);
+      } else if (selectedFieldNumber == 3) {
+        command = new ChangeSkillsCommand(_currentResume, newFieldValue);
+      } else if (selectedFieldNumber == 4) {
+        if (int.TryParse(newFieldValue, out int salaryValue)) {
+          command = new ChangeSalaryCommand(_currentResume, salaryValue);
         } else {
-          _view.ShowMessage("Ошибка: зарплата должна быть числом");
+          _resumeView.ShowMessage("Ошибка: зарплата должна быть числом");
           return;
         }
       }
 
       if (command != null) {
-        _history.ExecuteCommand(command);
-        _repo.Save(_currentResume);
-        _view.ShowMessage("Поле изменено");
+        _commandHistory.ExecuteCommand(command);
+        _resumeRepository.Save(_currentResume);
+        _resumeView.ShowMessage("Поле изменено");
       }
     }
 
     /// <summary>Undoes last action</summary>
     public void Undo() {
-      _history.Undo();
-      _repo.Save(_currentResume);
-      _view.ShowMessage("Отмена выполнена");
+      _commandHistory.Undo();
+      _resumeRepository.Save(_currentResume);
+      _resumeView.ShowMessage("Отмена выполнена");
     }
 
     /// <summary>Redoes last undone action</summary>
     public void Redo() {
-      _history.Redo();
-      _repo.Save(_currentResume);
-      _view.ShowMessage("Повтор выполнен");
+      _commandHistory.Redo();
+      _resumeRepository.Save(_currentResume);
+      _resumeView.ShowMessage("Повтор выполнен");
     }
   }
 }

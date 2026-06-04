@@ -1,8 +1,8 @@
 ﻿namespace JobSearchPlatform {
-  public class ChangeSalaryCommand(Resume resume, int newValue) : ICommand {
-    private readonly Resume _resume = resume;
-    private readonly int _oldValue = resume.Salary;
-    private readonly int _newValue = newValue;
+  public class ChangeSalaryCommand(Resume targetResume, int newSkillsValue) : ICommand {
+    private readonly Resume _resume = targetResume;
+    private readonly int _oldValue = targetResume.Salary;
+    private readonly int _newValue = newSkillsValue;
 
     public void Execute() {
       _resume.Salary = _newValue;

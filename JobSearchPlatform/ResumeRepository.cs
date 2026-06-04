@@ -11,40 +11,40 @@ namespace JobSearchPlatform {
     private const int SkillsIndex = 2;
     private const int SalaryIndex = 3;
 
-    /// <summary>Loads resume from file</summary>
+    /// <summary>Loads loadedResume from file</summary>
     /// <returns>Resume object if file exists and valid, otherwise null</returns>
-    public Resume Load() {
+    public Resume? Load() {
       if (!File.Exists(FileName)) {
         return null;
       }
 
       try {
-        string line = File.ReadAllText(FileName, Encoding.UTF8);
-        string[] parts = line.Split(Delimiter);
+        string fileContent = File.ReadAllText(FileName, Encoding.UTF8);
+        string[] fieldParts = fileContent.Split(Delimiter);
 
-        if (parts.Length != ExpectedPartsCount) {
+        if (fieldParts.Length != ExpectedPartsCount) {
           return null;
         }
 
-        Resume resume = new Resume {
-          Name = parts[NameIndex],
-          Experience = int.Parse(parts[ExperienceIndex]),
-          Skills = parts[SkillsIndex],
-          Salary = int.Parse(parts[SalaryIndex])
+        Resume loadedResume = new Resume {
+          Name = fieldParts[NameIndex],
+          Experience = int.Parse(fieldParts[ExperienceIndex]),
+          Skills = fieldParts[SkillsIndex],
+          Salary = int.Parse(fieldParts[SalaryIndex])
         };
 
-        return resume;
+        return loadedResume;
       }
       catch {
         return null;
       }
     }
 
-    /// <summary>Saves resume to file</summary>
+    /// <summary>Saves loadedResume to file</summary>
     /// <param name="resume">Resume object to save</param>
     public void Save(Resume resume) {
-      string line = resume.Name + Delimiter + resume.Experience + Delimiter + resume.Skills + Delimiter + resume.Salary;
-      File.WriteAllText(FileName, line, Encoding.UTF8);
+      string fileLine = resume.Name + Delimiter + resume.Experience + Delimiter + resume.Skills + Delimiter + resume.Salary;
+      File.WriteAllText(FileName, fileLine, Encoding.UTF8);
     }
   }
 }

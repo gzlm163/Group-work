@@ -8,20 +8,20 @@ namespace JobSearchPlatform.Tests
         [Test]
         public void Execute_ChangesExperience()
         {
-            Resume resume = new Resume { Experience = 2 };
-            ChangeExperienceCommand changeExperienceCommand = new ChangeExperienceCommand(resume, 5);
+            Resume testResume = new Resume { Experience = 2 };
+            ChangeExperienceCommand changeExperienceCommand = new ChangeExperienceCommand(testResume, 5);
             changeExperienceCommand.Execute();
-            Assert.That(resume.Experience, Is.EqualTo(5));
+            Assert.That(testResume.Experience, Is.EqualTo(5));
         }
 
         [Test]
         public void Undo_RestoresOldExperience()
         {
-            Resume resume = new Resume { Experience = 2 };
-            ChangeExperienceCommand changeExperienceCommand = new ChangeExperienceCommand(resume, 5);
+            Resume testResume = new Resume { Experience = 2 };
+            ChangeExperienceCommand changeExperienceCommand = new ChangeExperienceCommand(testResume, 5);
             changeExperienceCommand.Execute();
             changeExperienceCommand.Undo();
-            Assert.That(resume.Experience, Is.EqualTo(2));
+            Assert.That(testResume.Experience, Is.EqualTo(2));
         }
     }
 }

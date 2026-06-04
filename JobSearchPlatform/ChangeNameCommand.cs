@@ -1,8 +1,8 @@
 ﻿namespace JobSearchPlatform {
-  public class ChangeNameCommand(Resume resume, string newValue) : ICommand {
-    private readonly Resume _resume = resume;
-    private readonly string _oldValue = resume.Name;
-    private readonly string _newValue = newValue;
+  public class ChangeNameCommand(Resume targetResume, string newNameValuee) : ICommand {
+    private readonly Resume _resume = targetResume;
+    private readonly string _oldValue = targetResume.Name;
+    private readonly string _newValue = newNameValuee;
 
     public void Execute() {
       _resume.Name = _newValue;
