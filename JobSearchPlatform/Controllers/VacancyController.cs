@@ -1,6 +1,7 @@
 ﻿using JobSearchPlatform.Interfaces;
 using JobSearchPlatform.Models;
 using System.Collections.Generic;
+using JobSearchPlatform.Factories;
 
 namespace JobSearchPlatform.Controllers {
   public class VacancyController {

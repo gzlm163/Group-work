@@ -1,5 +1,6 @@
 ﻿using JobSearchPlatform.Interfaces;
 using JobSearchPlatform.Models;
+using JobSearchPlatform.Commands;
 using System;
 
 namespace JobSearchPlatform {
